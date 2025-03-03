@@ -21,6 +21,7 @@ def get_random_ai_coordinates(board, current_player):
   If the board is full (all spots taken by either X or O) than "None"
   should be returned.
   """
+  # ez nem kell
   pass
 
 
@@ -34,6 +35,7 @@ def get_unbeatable_ai_coordinates(board, current_player):
   If the board is full (all spots taken by either X or O) than "None"
   should be returned.
   """
+  # ez se
   pass
 
 
