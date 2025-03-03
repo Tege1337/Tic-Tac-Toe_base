@@ -10,11 +10,15 @@ def get_menu_option():
   If the user will enter invalid data (for example 5), than a message will appear
   asking to input a new value.
   '''
-  pass
+  option = input( "1. Human vs Human\n"
+                  "2. Random AI vs Random AI\n"
+                  "3. Human vs Random AI\n"
+                  "4. Human vs Unbeatable AI\n"
+                  "Type 1, 2, 3 or 4. ")
+  
+  return option
 
 
 if __name__ == "__main__":
-    # run this file to test you have implemented correctly the function
     option = get_menu_option()
-    print("If the user selected 1, it should print 1")
     print(option) 
