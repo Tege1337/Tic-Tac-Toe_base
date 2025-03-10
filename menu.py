@@ -10,13 +10,23 @@ def get_menu_option():
   If the user will enter invalid data (for example 5), than a message will appear
   asking to input a new value.
   '''
-  option = input( "1. Human vs Human\n"
-                  "2. Random AI vs Random AI\n"
-                  "3. Human vs Random AI\n"
-                  "4. Human vs Unbeatable AI\n"
-                  "Type 1, 2, 3 or 4. ")
-  
-  return option
+
+  while valaszt:
+    option = input( "1. Human vs Human\n"
+                      "2. Random AI vs Random AI\n"
+                      "3. Human vs Random AI\n"
+                      "4. Human vs Unbeatable AI\n"
+                      "Type 1, 2, 3 or 4. ")
+      
+    if option is None or option == " ":
+      valaszt = True
+    elif option == "1" or option == "2" or option == "3" or option == "4":
+      valaszt = False
+      
+      
+      
+      return option
+
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ def display_board(board):
         sorszam = chr(ord('A') + i)  # A, B, C sorok
         print(f"  {sorszam}  {sor[0]} | {sor[1]} | {sor[2]}")
         if i < 2:
-            print("      ---+---+---")  # Elválasztó vonal
+            print("    ---+---+---")  # Elválasztó vonal
 
 def is_board_full(board):
     """Visszaadja, hogy a tábla tele van-e (nincs üres hely)."""
