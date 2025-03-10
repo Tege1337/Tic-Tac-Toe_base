@@ -1,6 +1,6 @@
 def get_empty_board():
     """Visszaad egy üres 3x3-as táblát."""
-    return [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
+    return [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
 
 def display_board(board):
     """Megjeleníti a táblát olvasható formában."""
@@ -14,7 +14,7 @@ def display_board(board):
 def is_board_full(board):
     """Visszaadja, hogy a tábla tele van-e (nincs üres hely)."""
     for row in board:
-        if '.' in row:  # Ha van üres mező
+        if ' ' in row:  # Ha van üres mező
             return False
     return True  # Ha nincs üres mező, a tábla tele van
 
@@ -96,3 +96,4 @@ if __name__ == "__main__":
       ['.', 'X', '.'],
     ]
     print("Should return None (nincs nyertes):", get_winning_player(board_6))
+

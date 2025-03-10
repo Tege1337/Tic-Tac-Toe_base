@@ -6,24 +6,21 @@ def get_human_coordinates(board, current_player):
     valid_numbers = {'1': 0, '2': 1, '3': 2}
     
     while True:
-        user_input = input(f"Player {current_player}, enter your move (e.g., A1, B2) or 'quit' to exit: ").strip().upper()
+        user_input = input(f"Játékos {current_player}, írd be a helyet (pl., A1, B2) vagy 'kilépés' hogy kilépj: ").strip().upper()
         
-        if user_input == "QUIT":
-            print("Game exited.")
+        if user_input == "KILÉPÉS":
+            print("Játék vége, köszönjük a játékot cső.❤️")
             exit()
         
         if len(user_input) == 2 and user_input[0] in valid_letters and user_input[1] in valid_numbers:
             row, col = valid_letters[user_input[0]], valid_numbers[user_input[1]]
             
-            if board[row][col] == ' ':  # Assuming empty spaces are represented as ' '
+            if board[row][col] == ' ':
                 return row, col
             else:
-                print("That spot is already taken. Please try again.")
+                print("Az a hely már foglalt, próbáld újra.")
         else:
-            print("Invalid input. Please enter a valid coordinate (e.g., A1, B2). Try again.")
-
-
-
+            print("Az nem egy valós hely (pl., A1, B2). Próbáld újra.")
 
 
 
