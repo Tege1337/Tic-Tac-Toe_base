@@ -1,16 +1,30 @@
 def get_human_coordinates(board, current_player):
-  """
-  Should return the read coordinates for the tic tac toe board from the terminal.
-  The coordinates should be in the format  letter, number where the letter is 
-  A, B or C and the number 1, 2 or 3.
-  If the user enters an invalid coordinate (like Z0 or 1A, A11, sadfdsaf) 
-  than a warning message should appear and the coordinates reading process repeated.
-  If the user enters a coordinate that is already taken on the board.
-  than a warning message should appear and the coordinates reading process repeated.
-  If the user enters the word "quit" in any format of capitalized letters the program
-  should stop.
-  """
-  pass
+    """
+    Reads valid coordinates from the user for a tic-tac-toe game.
+    """
+    valid_letters = {'A': 0, 'B': 1, 'C': 2}
+    valid_numbers = {'1': 0, '2': 1, '3': 2}
+    
+    while True:
+        user_input = input(f"Player {current_player}, enter your move (e.g., A1, B2) or 'quit' to exit: ").strip().upper()
+        
+        if user_input == "QUIT":
+            print("Game exited.")
+            exit()
+        
+        if len(user_input) == 2 and user_input[0] in valid_letters and user_input[1] in valid_numbers:
+            row, col = valid_letters[user_input[0]], valid_numbers[user_input[1]]
+            
+            if board[row][col] == ' ':  # Assuming empty spaces are represented as ' '
+                return row, col
+            else:
+                print("That spot is already taken. Please try again.")
+        else:
+            print("Invalid input. Please enter a valid coordinate (e.g., A1, B2). Try again.")
+
+
+
+
 
 
 def get_random_ai_coordinates(board, current_player):
