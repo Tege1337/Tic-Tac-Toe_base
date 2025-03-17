@@ -10,7 +10,7 @@ HUMAN_VS_UNBEATABLE_AI = 4
 
 def main():
     game_mode = get_menu_option()
-    board = get_empty_board()
+    board = get_empty_board() 
     is_game_running = True
     while is_game_running:
         display_board(board)
@@ -27,7 +27,7 @@ def main():
         x, y = get_human_coordinates(board, current_player)
         
         board[x][y] = current_player
-        
+
         ### TO DO ###
         # based on the values of `winning_player` and `its_a_tie` the program
         # should either stop displaying a winning/tie message 
