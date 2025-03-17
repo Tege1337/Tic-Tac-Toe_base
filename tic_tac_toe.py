@@ -12,13 +12,24 @@ def main():
     game_mode = get_menu_option()
     board = get_empty_board() 
     is_game_running = True
+    current_player = 'X'
     while is_game_running:
         display_board(board)
         
         ### TO DO ###
         # in each new iteration of the while loop the program should 
         # alternate the value of `current_player` from `X` to `O`
-        current_player = 'X'
+        if game_mode == HUMAN_VS_HUMAN:
+            x, y = get_human_coordinates(board, current_player)
+
+        elif game_mode == RANDOM_AI_VS_RANDOM_AI:
+            x, y = get_random_ai_coordinates(board, current_player)
+
+        elif game_mode == HUMAN_VS_RANDOM_AI:
+            x, y = get_random_ai_coordinates(board)
+        
+        else:
+            pass
         
         ### TO DO ###
         # based on the value of the variables `game_mode` and `current_player` 
