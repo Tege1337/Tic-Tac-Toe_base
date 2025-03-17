@@ -30,4 +30,4 @@ def get_menu_option():
 
 if __name__ == "__main__":
     option = get_menu_option()
-    print(option) 
+    print(option)
