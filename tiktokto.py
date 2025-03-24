@@ -48,19 +48,29 @@ def free_cell(cell):
     return True
  
 #játék eleje
-print("🦠 KUTYÁK - TIKTOKTOE!")
-print("")
-print_mezo()
-print("")
+print("\n\n🦠 KUTYÁK - TIKTOKTOE!\n\n")
+
+def get_symbol(player):
+    while True:
+        symbol = input(f"Értem {player} és mégis milyen szimbólummal fogsz játszani? (Csak 1 karakter!) : ")
+        if len(symbol) == 1:
+            return symbol
+        else:
+            print("Hibás bemenet! Kérlek, csak 1 karaktert válassz.")
+
 player1 = input("Első játékos, most hozzád szólok, mi a neved? : ")
-player1_symbol = input(f"Értem {player1} és mégis milyen szimbólummal fogsz játszani? : ")
-player2 = input("Na és most te jössz második játékos! Hogyan szólíthatlak?: ")
-player2_symbol = input(f"Ahha, tehát {player2}, szia! És te melyik szimbólumot választottad? : ")
+player1_symbol = get_symbol(player1)
+
+player2 = input("Na és most te jössz második játékos! Hogyan szólíthatlak? : ")
+player2_symbol = get_symbol(player2)
+
 print(f"*------------------*\nJáték információk:\n\nElső játékos:\n{player1} - {player1_symbol}\n\nMásodik játékos:\n{player2} - {player2_symbol}\n\n*------------------*")
+
 game = True
 full_mezo = False
 turn_player1 = False
 winner = ""
+
  
 #nyeres
 def win_check(mezo, player1_symbol, player2_symbol):
