@@ -1,4 +1,5 @@
 import random
+import time
 
 # TIKTOKTOE.py
 # pálya generálás
@@ -12,22 +13,25 @@ for i in range(3):
 
 # mező kiírása
 def print_mezo():
+    print("\n  1   2   3")
+    print(" ┌───┬───┬───┐")
     for i in range(3):
-        print(" " + " | ".join(mezo[i]) + " ")
+        print(f"{i+1}│ " + " │ ".join(mezo[i]) + " │")
         if i < 2:
-            print("---+---+---")
+            print(" ├───┼───┼───┤")
+    print(" └───┴───┴───┘\n")
 
 # játékos választás
 def player_turn(turn_player1, ai_mode):
     if turn_player1:
         turn_player1 = False
         if ai_mode:
-            print(f"A gép van soron!")
+            print("\n🔹 A gép gondolkodik...")
         else:
-            print(f"{player2} van soron!")
+            print(f"\n🔸 {player2} van soron!")
     else:
         turn_player1 = True
-        print(f"{player1} van soron!")
+        print(f"\n🔸 {player1} van soron!")
     return turn_player1
 
 # mező választása
@@ -35,10 +39,8 @@ def write_cell(cell):
     cell -= 1
     i = cell // 3
     j = cell % 3
-    if turn_player1:
-        mezo[i][j] = player1_symbol
-    else:
-        mezo[i][j] = player2_symbol
+    symbol = player1_symbol if turn_player1 else player2_symbol
+    mezo[i][j] = symbol
     return mezo
 
 # mező szabad-e?
@@ -47,60 +49,63 @@ def free_cell(cell):
     i = cell // 3
     j = cell % 3
     if mezo[i][j] in [player1_symbol, player2_symbol]:
-        print("HÉ! Ez egy foglalt cella...")
+        print("⚠️  Ez a cella már foglalt! Próbáld újra.")
         return False
     return True
 
 # AI lépés
 def ai_move():
     for cell in range(1, 10):
-        cell -= 1
-        i, j = cell // 3, cell % 3
+        cell_idx = cell - 1
+        i, j = cell_idx // 3, cell_idx % 3
         if mezo[i][j] == " ":
             mezo[i][j] = player2_symbol
             game_check, _ = win_check(mezo, player1_symbol, player2_symbol)
             mezo[i][j] = " "
-            if not game_check:  # Ha AI nyerhet, lépjen ide
-                return cell + 1
-    # Nincs nyerő lépés, válassz véletlenszerűen
+            if not game_check:  # Ha AI nyerhet
+                return cell
     empty_cells = [idx + 1 for idx in range(9) if mezo[idx // 3][idx % 3] == " "]
     return random.choice(empty_cells)
 
 # játék eleje
-print("\n\n🦠 KUTYÁK - TIKTOKTOE!\n\n")
+print("\n🦠 KUTYÁK - TIKTOKTOE! 🦠\n")
 
 def get_symbol(player):
     while True:
-        symbol = input(f"Értem {player}, milyen szimbólummal játszol? (Csak 1 karakter!) : ")
+        symbol = input(f"🎮 {player}, válassz szimbólumot (1 karakter!): ").strip()
         if len(symbol) == 1:
             return symbol
-        else:
-            print("Hibás bemenet! Csak 1 karaktert választhatsz.")
+        print("⚠️  Hibás bemenet! Csak 1 karaktert választhatsz.")
 
-player1 = input("Első játékos, mi a neved? : ")
+player1 = input("👤 Első játékos, mi a neved? ").strip()
 player1_symbol = get_symbol(player1)
 
-# Játékmód választása
-mode = input("Szeretnél AI ellen játszani? (igen/nem) : ").strip().lower()
+mode = input("🕹 AI ellen játszol? (igen/nem) ").strip().lower()
 ai_mode = mode == 'igen'
 
 if ai_mode:
     player2 = "Gép"
-    player2_symbol = get_symbol(player2)
+    while True:
+        player2_symbol = get_symbol(player2)
+        if player2_symbol != player1_symbol:
+            break
+        print("⚠️  Ez a szimbólum már foglalt az első játékos által! Válassz másikat.")
 else:
-    player2 = input("Második játékos, hogyan szólíthatlak? : ")
-    player2_symbol = get_symbol(player2)
+    player2 = input("👤 Második játékos, hogy hívhatlak? ").strip()
+    while True:
+        player2_symbol = get_symbol(player2)
+        if player2_symbol != player1_symbol:
+            break
+        print("⚠️  Ez a szimbólum már foglalt az első játékos által! Válassz másikat.")
 
-print(f"*------------------*\nJáték információk:\n\nElső játékos:\n{player1} - {player1_symbol}\n\nMásodik játékos:\n{player2} - {player2_symbol}\n\n*------------------*")
+print(f"\n*--------------------*\n  Játék információk:\n\n  1. {player1}: {player1_symbol}\n  2. {player2}: {player2_symbol}\n*--------------------*\n")
 
 game = True
 turn_player1 = False
 winner = ""
 
-# nyerés ellenőrzése
-def win_check(mezo, player1_symbol, player2_symbol):
-    full_mezo = True
-    lines = [  # Sorok, oszlopok, átlók
+def win_check(mezo, p1_sym, p2_sym):
+    lines = [
         [(0, 0), (0, 1), (0, 2)],
         [(1, 0), (1, 1), (1, 2)],
         [(2, 0), (2, 1), (2, 2)],
@@ -113,46 +118,44 @@ def win_check(mezo, player1_symbol, player2_symbol):
 
     for line in lines:
         symbols = [mezo[i][j] for i, j in line]
-        if symbols == [player1_symbol]*3:
+        if symbols == [p1_sym]*3:
             return False, player1
-        if symbols == [player2_symbol]*3:
+        if symbols == [p2_sym]*3:
             return False, player2
 
-    for row in mezo:
-        if " " in row:
-            full_mezo = False
-
-    if full_mezo:
+    if all(cell != " " for row in mezo for cell in row):
         return False, ""  # Döntetlen
 
     return True, ""
 
 # játék fő ciklusa
 while game:
+    print_mezo()
     turn_player1 = player_turn(turn_player1, ai_mode)
-
+    
     valid_move = False
     while not valid_move:
         if turn_player1 or not ai_mode:
             try:
-                cell = int(input("Válassz cellát (1-9): "))
+                cell = int(input("🔢 Válassz cellát (1-9): "))
                 if 1 <= cell <= 9 and free_cell(cell):
                     valid_move = True
             except ValueError:
-                print("Kérlek, adj meg egy számot 1 és 9 között.")
+                print("⚠️  Érvénytelen szám!")
         else:
+            time.sleep(1.5)
             cell = ai_move()
-            print(f"A gép a(z) {cell} cellát választja.")
+            print(f"🤖 A gép a(z) {cell} cellát választotta.")
             valid_move = True
 
     mezo = write_cell(cell)
-    print_mezo()
     game, winner = win_check(mezo, player1_symbol, player2_symbol)
 
 # játék vége
+print_mezo()
 if winner == player1:
-    print(f"🎉 {player1}, gratulálok, nyertél!")
+    print(f"🎉 {player1}, nyertél! Gratulálok!")
 elif winner == player2:
-    print(f"🎉 {player2}, gratulálok, nyertél!")
+    print(f"🎉 {player2}, a gép nyert! Próbáld újra!")
 else:
-    print("🪦 DÖNTETLEN!")
+    print("⚖️ Döntetlen! Próbáljátok meg újra!")
