@@ -9,7 +9,7 @@ def get_human_coordinates(board, current_player):
         user_input = input(f"Játékos {current_player}, írd be a helyet (pl., A1, B2) vagy 'kilépés' hogy kilépj: ").strip().upper()
         
         if user_input == "KILÉPÉS":
-            print("Játék vége, köszönjük a játékot cső.❤️")
+            print("Játék vége, köszönjük a játékot.")
             exit()
         
         if len(user_input) == 2 and user_input[0] in valid_letters and user_input[1] in valid_numbers:
