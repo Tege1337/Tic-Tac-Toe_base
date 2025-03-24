@@ -1,3 +1,4 @@
+#TIKTOKTOE.py
 #palya generalas
 mezo = []
 sor = []
