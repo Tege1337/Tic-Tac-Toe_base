@@ -21,4 +21,7 @@ def print_grid():
 #Játékos
 def player_turn(turn_player1):
     if turn_player1 == True:
-        
+        turn_player1 = False
+
+
+def write_cell(cell)
