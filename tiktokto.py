@@ -46,7 +46,7 @@ def free_cell(cell):
     cell -= 1
     i = int(cell / 3)
     j =  cell % 3
-    if oszlop[i][j] == player1_symbol or groslopid[i][j] == player2_symbol:
+    if oszlop[i][j] == player1_symbol or oszlop[i][j] == player2_symbol:
         print("This cell is not free")
         return False
     return True
