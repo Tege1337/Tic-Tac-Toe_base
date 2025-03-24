@@ -31,4 +31,13 @@ def player_turn(turn_player1):
 #hely kiválasztása
 def write_cell(cell):
     cell -= 1
-    i = int()
+    i = int(cell / 3)
+    j = cell % 3
+    if turn_player1 == True:
+        grid[]
+
+
+print("TIC-TAC-TOE")
+player1 = input("Kérlek add meg az első játékos nevét! ")
+player1_symbool = input("Kérlek add meg az első játékos szimbólumát! ")
+player2 = input("Kérlek add meg a második játékos nevét! ")
