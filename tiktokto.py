@@ -1,7 +1,8 @@
+# TIKTOKTOE.py × KUTYÁK
 import random
 import time
 
-# TIKTOKTOE.py
+
 # pálya generálás
 mezo = []
 sor = []
