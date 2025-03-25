@@ -42,7 +42,7 @@ def main():
         ### TO DO ###
         # based on the values of `winning_player` and `its_a_tie` the program
         # should either stop displaying a winning/tie message 
-        # OR continue the while loop
+        # OR continue the while loop mc isti
         winning_player = get_winning_player(board)
         its_a_tie = is_board_full(board)
 
