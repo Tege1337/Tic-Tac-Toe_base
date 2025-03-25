@@ -100,6 +100,7 @@ else:
         print("⚠️  Ez a szimbólum már foglalt az első játékos által! Válassz másikat.")
 
 print(f"\n*--------------------*\n  Játék információk:\n\n  1. {player1}: {player1_symbol}\n  2. {player2}: {player2_symbol}\n*--------------------*\n")
+time.sleep(2)
 
 game = True
 turn_player1 = False
