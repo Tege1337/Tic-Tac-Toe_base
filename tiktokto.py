@@ -2,6 +2,12 @@
 import random
 import time
 
+# kordik 
+cell_mapping = {
+    "A1": (0, 0), "A2": (0, 1), "A3": (0, 2),
+    "B1": (1, 0), "B2": (1, 1), "B3": (1, 2),
+    "C1": (2, 0), "C2": (2, 1), "C3": (2, 2)
+}
 
 # pálya generálás
 mezo = []
@@ -12,15 +18,16 @@ for i in range(3):
     mezo.append(sor)
     sor = []
 
-# mező kiírása
+# mezo kiirasa
 def print_mezo():
-    print("\n  1   2   3")
-    print(" ┌───┬───┬───┐")
-    for i in range(3):
-        print(f"{i+1}│ " + " │ ".join(mezo[i]) + " │")
+    print("\n    1   2   3")
+    print("  ┌───┬───┬───┐")
+    for i, row in enumerate(mezo):
+        row_label = chr(65 + i)  # 0 1 2 - A B C 
+        print(f"{row_label} │ " + " │ ".join(row) + " │")
         if i < 2:
-            print(" ├───┼───┼───┤")
-    print(" └───┴───┴───┘\n")
+            print("  ├───┼───┼───┤")
+    print("  └───┴───┴───┘\n")
 
 # játékos választás
 def player_turn(turn_player1, ai_mode):
@@ -35,37 +42,34 @@ def player_turn(turn_player1, ai_mode):
         print(f"\n🔸 {player1} van soron!")
     return turn_player1
 
-# mező választása
+# cellaba iras
 def write_cell(cell):
-    cell -= 1
-    i = cell // 3
-    j = cell % 3
+    i, j = cell_mapping[cell]
     symbol = player1_symbol if turn_player1 else player2_symbol
     mezo[i][j] = symbol
     return mezo
 
-# mező szabad-e?
+# cella-szabad-e
 def free_cell(cell):
-    cell -= 1
-    i = cell // 3
-    j = cell % 3
+    if cell not in cell_mapping:
+        print("⚠️  Érvénytelen cella! Próbáld újra.")
+        return False
+    i, j = cell_mapping[cell]
     if mezo[i][j] in [player1_symbol, player2_symbol]:
         print("⚠️  Ez a cella már foglalt! Próbáld újra.")
         return False
     return True
 
-# AI lépés
+# ai mode
 def ai_move():
-    for cell in range(1, 10):
-        cell_idx = cell - 1
-        i, j = cell_idx // 3, cell_idx % 3
+    for cell, (i, j) in cell_mapping.items():
         if mezo[i][j] == " ":
             mezo[i][j] = player2_symbol
             game_check, _ = win_check(mezo, player1_symbol, player2_symbol)
             mezo[i][j] = " "
-            if not game_check:  # Ha AI nyerhet
+            if not game_check:  # Ha az AI nyerhet
                 return cell
-    empty_cells = [idx + 1 for idx in range(9) if mezo[idx // 3][idx % 3] == " "]
+    empty_cells = [cell for cell, (i, j) in cell_mapping.items() if mezo[i][j] == " "]
     return random.choice(empty_cells)
 
 # játék eleje
@@ -130,7 +134,7 @@ def win_check(mezo, p1_sym, p2_sym):
 
     return True, ""
 
-# játék fő ciklusa
+# jatek ciklus
 while game:
     print_mezo()
     turn_player1 = player_turn(turn_player1, ai_mode)
@@ -139,11 +143,11 @@ while game:
     while not valid_move:
         if turn_player1 or not ai_mode:
             try:
-                cell = int(input("🔢 Válassz cellát (1-9): "))
-                if 1 <= cell <= 9 and free_cell(cell):
+                cell = input("🔢 Válassz cellát (pl. A1, B2): ").strip().upper()
+                if free_cell(cell):
                     valid_move = True
             except ValueError:
-                print("⚠️  Érvénytelen szám!")
+                print("⚠️  Érvénytelen bemenet!")
         else:
             time.sleep(1.5)
             cell = ai_move()
@@ -153,7 +157,7 @@ while game:
     mezo = write_cell(cell)
     game, winner = win_check(mezo, player1_symbol, player2_symbol)
 
-# játék vége
+# A játék vége
 print_mezo()
 if winner == player1:
     print(f"🎉 {player1}, nyertél! Gratulálok!")
